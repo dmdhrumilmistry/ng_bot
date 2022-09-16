@@ -1,0 +1,11 @@
+certifi==2022.9.14
+chardet==4.0.0
+charset-normalizer==2.1.1
+idna==2.10
+ngrok-api==0.8.0
+pyngrok==5.1.0
+pyTelegramBotAPI==4.7.0
+python-dotenv==0.21.0
+PyYAML==6.0
+requests==2.25.1
+urllib3==1.26.12
