@@ -1,7 +1,7 @@
 from tele_ng_bot.ngrok_wrapper import NgrokWrapper
 
 import logging
-logging.getLogger("ngrok_wrapper").setLevel(logging.WARNING)
+logging.getLogger("tele_ng_bot.ngrok_wrapper").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 

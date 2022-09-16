@@ -10,7 +10,6 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
-
 class NgrokWrapper:
     def __init__(self) -> None:
         NGROK_AUTH_TOKEN = getenv('NGROK_AUTH_TOKEN', None)
