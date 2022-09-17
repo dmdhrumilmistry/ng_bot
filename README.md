@@ -1,10 +1,36 @@
-# Usage
+# Tele-Ng-Bot
+
+Telegram Ngrok Bot (Tele-Ng-Bot) publishes updated ngrok URLs to telegram chat ids and restricts other users to access the bot.
+
+> `Note`: This bot may be used for malicious purposes too. Its upto users how they use this tool/bot. Author is not responsible for user's action in any manner.
+
+## Installation
+
+- Clone repo
+
+  ```bash
+  git clone --depth=1 https://github.com/dmdhrumilmistry/tele-ng-bot.git
+  ```
+
+- Change directory
+
+  ```bash
+  cd tele-ng-bot
+  ```
+
+- Install requirements
+
+  ```bash
+  python3 -m pip install -r requirements.txt
+  ```
+
+## Usage
 
 - Create Ngrok account
 
 - Complete Sign Up process
 
-- Add new API key and AUTH TOKEN from [dashboard](https://dashboard.ngrok.com/api)
+- Add new AUTH TOKEN from [dashboard](https://dashboard.ngrok.com/get-started/your-authtoken)
 
 - Store variables in `.env` file
 
@@ -19,5 +45,5 @@
 - Start application
 
   ```bash
-  python3 -m tele_ng_bot
+  python3 -m tele_ng_bot --http 8080 --tcp 22 4444
   ```
