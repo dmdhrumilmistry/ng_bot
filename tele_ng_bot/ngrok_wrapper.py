@@ -41,7 +41,7 @@ class NgrokWrapper:
 
         # expose tcp ports
         for tcp_port in tcp_ports:
-            if self.__create_tunnel(tcp_port, 'http'):
+            if self.__create_tunnel(tcp_port, 'tcp'):
                 logger.info(f'HTTP {tcp_port} opened successfully')
             else:
                 logger.error(f'Failed to open HTTP port {tcp_port}')
@@ -58,7 +58,7 @@ class NgrokWrapper:
                     'addr': tunnel.config.get('addr')
                 }
             )
-
+        
         return tunnel_details
 
     def print_tunnel_links(self):

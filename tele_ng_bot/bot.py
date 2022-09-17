@@ -61,8 +61,12 @@ def send_help_message(message):
     '''
     replies back to the user with help message
     '''
-    pass
+    help_message = 'This is help section'
+    tlbot.reply_to(message=message, text=help_message)
 
+def send_notification_to_allowed_ids(message:str):
+    for user_id in allowed_ids:
+        tlbot.send_message(chat_id=user_id, text=message)
 
 # set webhook to notify user
-tlbot.set_webhook()
+# tlbot.set_webhook()
