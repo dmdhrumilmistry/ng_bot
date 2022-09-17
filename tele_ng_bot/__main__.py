@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from .bot import tlbot, send_notification_to_allowed_ids
 from tele_ng_bot.ngrok_wrapper import NgrokWrapper
 from threading import Thread
@@ -13,11 +14,11 @@ logger = logging.getLogger(__name__)
 ngrok_client = NgrokWrapper()
 
 
-def start_ngrok():
+def start_ngrok(http_ports: list[int] = [8000, 8080], tcp_ports: list[int] = [22]):
     ngrok_client.connect(
         tunnels={
-            "http": [8000],
-            "tcp": [22, 4444]
+            "http": http_ports,
+            "tcp": tcp_ports
         }
     )
     ngrok_client.start()
@@ -30,18 +31,19 @@ def send_new_urls_notification():
         message += dedent(f'''
         name: {tunnel_data.get('name', None)}
         url: {tunnel_data.get('url', None)}
-        addr: {tunnel_data.get('url', None)}
+        addr: {tunnel_data.get('addr', None)}
         --------------------------------
         ''')
 
     send_notification_to_allowed_ids(message)
+
 
 def get_tunnels_data():
     tunnels_data = []
     response = get(
         url='http://localhost:4040/api/tunnels',
         headers={
-            'Accept':'application/json',
+            'Accept': 'application/json',
         }
     )
 
@@ -56,17 +58,18 @@ def get_tunnels_data():
                 }
             )
     else:
-        logger.warning(f'API responded with status code: {response.status_code}')
+        logger.warning(
+            f'API responded with status code: {response.status_code}')
 
     return tunnels_data
-            
+
 
 def poll_ngrok_url_change():
     prev_urls = []
     while True:
         new_urls = [tunnel_data.get('url', None)
                     for tunnel_data in get_tunnels_data()]
-        
+
         is_new_url = False
         for new_url in new_urls:
             if new_url not in prev_urls:
@@ -79,11 +82,10 @@ def poll_ngrok_url_change():
         sleep(20)
 
 
-
-if __name__ == '__main__':
+def main(http_ports: list[int], tcp_ports: list[int]):
     threads = []
 
-    threads.append(Thread(target=start_ngrok))
+    threads.append(Thread(target=start_ngrok, args=(http_ports, tcp_ports,)))
     threads.append(Thread(target=get_tunnels_data))
     threads.append(Thread(target=poll_ngrok_url_change))
 
@@ -96,3 +98,18 @@ if __name__ == '__main__':
     tlbot.infinity_polling()
 
 
+if __name__ == '__main__':
+
+    parser = ArgumentParser(
+        prog='tele_bot_ng',
+    )
+
+    parser.add_argument('--http', dest='http_ports',default=[8000], nargs='+', type=int, help='web services ports separated by spaces')
+    parser.add_argument('--tcp', dest='tcp_ports',default=[], nargs='+', type=int, help='tcp services ports separated by spaces')
+
+    args = parser.parse_args()
+
+    main(
+        http_ports=args.http_ports,
+        tcp_ports=args.tcp_ports
+    )
