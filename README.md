@@ -38,6 +38,7 @@ Telegram Ngrok Bot (Tele-Ng-Bot) publishes updated ngrok URLs to telegram chat i
   NGROK_AUTH_TOKEN='your_auth_token'
   TELE_BOT_TOKEN='telegram_bot_token'
   ALLOWED_USER_IDS=tele_user_id1, tele_user_id2, tele_user_id3
+  DISCORD_WEBHOOK_URL='webhook-url' 
   ```
 
   > Above variables can also be stored in environment variables
@@ -45,5 +46,9 @@ Telegram Ngrok Bot (Tele-Ng-Bot) publishes updated ngrok URLs to telegram chat i
 - Start application
 
   ```bash
-  python3 -m tele_ng_bot --http 8080 --tcp 22 4444
+  # for telegram
+  python3 -m ng_bot --http 8080 --tcp 22 4444 --platform telegram
+
+  # for discord
+  python3 -m ng_bot --tcp 22 --platform discord
   ```
