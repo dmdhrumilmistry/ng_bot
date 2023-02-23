@@ -1,6 +1,6 @@
-# Tele-Ng-Bot
+# Ng-Bot
 
-Telegram Ngrok Bot (Tele-Ng-Bot) publishes updated ngrok URLs to telegram chat ids and restricts other users to access the bot.
+Ngrok Bot (Ng-Bot) publishes updated ngrok URLs to telegram chat ids and restricts other users to access the bot or on discord using webhook url.
 
 > `Note`: This bot may be used for malicious purposes too. Its upto users how they use this tool/bot. Author is not responsible for user's action in any manner.
 
@@ -9,13 +9,13 @@ Telegram Ngrok Bot (Tele-Ng-Bot) publishes updated ngrok URLs to telegram chat i
 - Clone repo
 
   ```bash
-  git clone --depth=1 https://github.com/dmdhrumilmistry/tele-ng-bot.git
+  git clone --depth=1 https://github.com/dmdhrumilmistry/ng_bot.git
   ```
 
 - Change directory
 
   ```bash
-  cd tele-ng-bot
+  cd ng_bot
   ```
 
 - Install requirements

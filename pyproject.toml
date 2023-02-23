@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "ng_bot"
+version = "1.0.0"
+description = "Bot Integrations with various platforms to send latest ngork links"
+authors = ["Dhrumil Mistry <56185972+dmdhrumilmistry@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "ng_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pyngrok = "^5.2.1"
+requests = "^2.28.2"
+pytelegrambotapi = "^4.10.0"
+prettytable = "^3.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
