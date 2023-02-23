@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ng_bot"
-version = "1.0.1"
+version = "1.0.2"
 description = "Bot Integrations with various platforms to send latest ngork links"
 authors = ["Dhrumil Mistry <56185972+dmdhrumilmistry@users.noreply.github.com>"]
 license = "MIT"
