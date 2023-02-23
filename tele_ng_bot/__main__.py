@@ -5,6 +5,8 @@ from threading import Thread
 from textwrap import dedent
 from time import sleep
 from requests import get
+from sys import exit
+
 
 import logging
 
@@ -14,7 +16,7 @@ logger = logging.getLogger(__name__)
 ngrok_client = NgrokWrapper()
 
 
-def start_ngrok(http_ports: list[int] = [8000, 8080], tcp_ports: list[int] = [22]):
+def start_ngrok(http_ports: list[int] = [], tcp_ports: list[int] = []):
     ngrok_client.connect(
         tunnels={
             "http": http_ports,
@@ -104,10 +106,14 @@ if __name__ == '__main__':
         prog='tele_bot_ng',
     )
 
-    parser.add_argument('--http', dest='http_ports',default=[8000], nargs='+', type=int, help='web services ports separated by spaces')
+    parser.add_argument('--http', dest='http_ports',default=[], nargs='+', type=int, help='web services ports separated by spaces')
     parser.add_argument('--tcp', dest='tcp_ports',default=[], nargs='+', type=int, help='tcp services ports separated by spaces')
 
     args = parser.parse_args()
+
+    if not (args.http_ports or args.tcp_ports):
+        parser.print_help() 
+        exit()
 
     main(
         http_ports=args.http_ports,
