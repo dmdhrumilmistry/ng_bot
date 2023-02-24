@@ -1,13 +1,15 @@
 from argparse import ArgumentParser
-from .bot import tlbot, send_notification_to_allowed_ids
-from .discord import send_discord_message
 from ng_bot.ngrok_wrapper import NgrokWrapper
 from threading import Thread
 from textwrap import dedent
 from time import sleep
 from requests import get
+from requests.exceptions import ConnectionError
 from os import getenv
 from sys import exit
+
+from .bot import tlbot, send_notification_to_allowed_ids
+from .discord import send_discord_message
 
 
 import logging
@@ -50,28 +52,28 @@ def send_new_urls_notification(notify_on: str = 'telegram'):
 
 def get_tunnels_data():
     tunnels_data = []
-    response = get(
-        url='http://localhost:4040/api/tunnels',
-        headers={
+    try:
+        response = get(
+            url='http://localhost:4040/api/tunnels',
+            headers={
             'Accept': 'application/json',
-        },
-        max_retries=5,
-        dely_between_retries=3,
-    )
-
-    if 200 <= response.status_code < 300:
-        tunnels = response.json().get('tunnels', [])
-        for tunnel in tunnels:
-            tunnels_data.append(
-                {
-                    'name': tunnel.get('name', None),
-                    'url': tunnel.get('public_url', None),
-                    'addr': tunnel.get('config', {}).get('addr')
-                }
-            )
-    else:
-        logger.warning(
-            f'API responded with status code: {response.status_code}')
+            },
+        )
+        if 200 <= response.status_code < 300:
+            tunnels = response.json().get('tunnels', [])
+            for tunnel in tunnels:
+                tunnels_data.append(
+                    {
+                        'name': tunnel.get('name', None),
+                        'url': tunnel.get('public_url', None),
+                        'addr': tunnel.get('config', {}).get('addr')
+                    }
+                )
+        else:
+            logger.warning(
+                f'API responded with status code: {response.status_code}')
+    except ConnectionError:
+        logger.error("Connection Error: ngrok is still starting")
 
     return tunnels_data
 
@@ -91,7 +93,7 @@ def poll_ngrok_url_change(platform:str):
         if is_new_url:
             send_new_urls_notification(notify_on=platform)
 
-        sleep(20)
+        sleep(5)
 
 
 def main(http_ports: list[int], tcp_ports: list[int], platform: str):
@@ -115,7 +117,7 @@ def main(http_ports: list[int], tcp_ports: list[int], platform: str):
 if __name__ == '__main__':
 
     parser = ArgumentParser(
-        prog='tele_bot_ng',
+        prog='ng_bot',
     )
 
     parser.add_argument('--http', dest='http_ports', default=[], nargs='+',

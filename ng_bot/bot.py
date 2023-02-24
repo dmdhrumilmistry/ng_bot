@@ -1,6 +1,7 @@
 from telebot import TeleBot
 from telebot.types import Message
 from os import getenv
+from sys import exit
 
 import functools
 import logging
@@ -10,10 +11,14 @@ logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # get variable values from environment variables
-allowed_ids = [int(id) for id in getenv('ALLOWED_USER_IDS', ' ').split(',')]
-if not allowed_ids:
-    logger.warning(
+allowed_ids = getenv('ALLOWED_USER_IDS', '').split(',')
+if allowed_ids[0] == '':
+    logger.error(
         'set ALLOWED_USER_IDS in environment variable or .env file')
+    exit(-1)
+    
+allowed_ids = [int(id) for id in allowed_ids]
+
 
 TELE_BOT_TOKEN = getenv('TELE_BOT_TOKEN', None)
 if not TELE_BOT_TOKEN:
