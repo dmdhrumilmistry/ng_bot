@@ -6,6 +6,24 @@ Ngrok Bot (Ng-Bot) publishes updated ngrok URLs to telegram chat ids and restric
 
 ## Installation
 
+### Using pip
+
+- Install from pypi
+
+  ```bash
+  python3 -m pip install ng-bot
+  ```
+
+  **OR**
+
+- Install from main branch
+
+  ```bash
+  python3 -m pip install git+https://github.com/dmdhrumilmistry/ng_bot.git
+  ```
+
+### Manual
+
 - Clone repo
 
   ```bash
@@ -18,11 +36,12 @@ Ngrok Bot (Ng-Bot) publishes updated ngrok URLs to telegram chat ids and restric
   cd ng_bot
   ```
 
-- Install requirements
+- Install package
 
   ```bash
-  python3 -m pip install -r requirements.txt
+  python3 -m pip install .
   ```
+
 
 ## Usage
 
@@ -52,3 +71,15 @@ Ngrok Bot (Ng-Bot) publishes updated ngrok URLs to telegram chat ids and restric
   # for discord
   python3 -m ng_bot --tcp 22 --platform discord
   ```
+
+## Security
+
+- Disable password based authentication in `/etc/ssh/ssh_config`
+  
+  ```config
+  PasswordAuthentication no
+  ```
+
+- Add client's public key to server's `~/.ssh/authorized_keys` file
+
+> Now only users with authorized public key can access server
