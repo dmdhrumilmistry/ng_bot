@@ -1,13 +1,13 @@
 [Unit]
-Description=My Service
+Description=ng_bot service
 After=network.target
 
 [Service]
-WorkingDirectory="path where .env file is stored"
-ExecStart="python3 -m ng_bot --tcp 22 --platform discord"
+WorkingDirectory=path where .env file is stored
+ExecStart=python3 -m ng_bot --tcp 22 --platform discord
 Restart=always
-User="your_user"
-Group="your_group"
+User=your_user
+Group=your_group
 
 [Install]
 WantedBy=multi-user.target
