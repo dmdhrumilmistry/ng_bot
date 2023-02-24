@@ -54,7 +54,9 @@ def get_tunnels_data():
         url='http://localhost:4040/api/tunnels',
         headers={
             'Accept': 'application/json',
-        }
+        },
+        max_retries=5,
+        dely_between_retries=3,
     )
 
     if 200 <= response.status_code < 300:
