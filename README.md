@@ -83,3 +83,8 @@ Ngrok Bot (Ng-Bot) publishes updated ngrok URLs to telegram chat ids and restric
 - Add client's public key to server's `~/.ssh/authorized_keys` file
 
 > Now only users with authorized public key can access server
+
+## Run as a Service
+
+- Read [Instructions](./service/README.md)
+
